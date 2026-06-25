@@ -143,6 +143,27 @@ Playback volume is an `afplay` gain (`1.0` = normal, `0` = mute, `2.0` = louder)
 bash scripts/foghorn-volume.sh 0.5
 ```
 
+## Keep screen awake
+
+The display-awake feature (`caffeinate`) is **on by default**. Toggle it with the shared config
+at `~/.config/foghorn/caffeinate` (`on`/`off`) — applies to Claude Code and OpenCode.
+
+**Claude Code** — slash command:
+
+```
+/foghorn-caffeine          # show status
+/foghorn-caffeine off      # disable
+/foghorn-caffeine on       # enable
+```
+
+**Any CLI** — run the script directly:
+
+```sh
+bash scripts/foghorn-caffeine.sh off
+```
+
+Changes take effect at the next session start.
+
 ## Support
 
 If foghorn made you laugh (or kept your screen awake through a long run), buy me a coffee ☕

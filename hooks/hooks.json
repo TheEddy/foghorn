@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "nohup caffeinate -d -w $PPID >/dev/null 2>&1 &"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/keep-awake.sh\" $PPID"
           }
         ]
       }
