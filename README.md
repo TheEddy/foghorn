@@ -1,4 +1,8 @@
-# 📢 Foghorn
+<p align="center">
+  <img src="assets/icon-400.png" width="180" alt="Foghorn icon">
+</p>
+
+<h1 align="center">📢 Foghorn</h1>
 
 A coding-agent plugin (macOS) that:
 
