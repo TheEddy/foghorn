@@ -9,6 +9,8 @@ Business in front, FAAAHHH in back.
 
 > macOS only — uses `afplay` and `caffeinate`.
 
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-theeddy-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/theeddy)
+
 ## Compatibility
 
 Foghorn is a **side-effect** plugin (it plays a sound / holds a power assertion), so it only
@@ -117,3 +119,9 @@ source of truth for clip selection.
 ## Add / remove clips
 
 Drop or delete `.mp3` files in `assets/clips/`. The player picks uniformly at random from whatever is there.
+
+## Support
+
+If foghorn made you laugh (or kept your screen awake through a long run), buy me a coffee ☕
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-theeddy-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/theeddy)
