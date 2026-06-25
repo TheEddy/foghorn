@@ -1,0 +1,13 @@
+{
+  "name": "foghorn",
+  "displayName": "Foghorn",
+  "version": "1.0.0",
+  "description": "Blares a random meme sound when the agent docks (stops), and keeps the display awake during a session (macOS).",
+  "author": {
+    "name": "Fedor Gubaidulin",
+    "email": "fedor.gubaidulin@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["sound", "notification", "meme", "caffeinate", "macos", "hooks"],
+  "hooks": "./hooks/hooks.json"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "foghorn-marketplace",
+  "owner": {
+    "name": "Fedor Gubaidulin",
+    "email": "fedor.gubaidulin@gmail.com"
+  },
+  "description": "Local marketplace hosting the Foghorn plugin.",
+  "plugins": [
+    {
+      "name": "foghorn",
+      "source": ".",
+      "description": "Blares a random meme sound on agent stop + keeps display awake during a session (macOS).",
+      "version": "1.0.0",
+      "license": "MIT"
+    }
+  ]
+}
