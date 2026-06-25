@@ -7,7 +7,7 @@ allowed-tools: Bash
 Run the Foghorn keep-awake control with the user's argument and report its output verbatim:
 
 ```bash
-bash "$CLAUDE_PLUGIN_ROOT/scripts/foghorn-caffeine.sh" $ARGUMENTS
+node "$CLAUDE_PLUGIN_ROOT/scripts/foghorn-caffeine.mjs" $ARGUMENTS
 ```
 
 Argument meaning:

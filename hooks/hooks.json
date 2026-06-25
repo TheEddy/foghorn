@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/keep-awake.sh\" $PPID"
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/keep-awake.mjs\" $PPID"
           }
         ]
       }
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/play-random.sh\""
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/play-random.mjs\""
           }
         ]
       }

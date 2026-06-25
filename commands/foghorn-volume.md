@@ -7,7 +7,7 @@ allowed-tools: Bash
 Run the Foghorn volume control with the user's argument and report its output verbatim:
 
 ```bash
-bash "$CLAUDE_PLUGIN_ROOT/scripts/foghorn-volume.sh" $ARGUMENTS
+node "$CLAUDE_PLUGIN_ROOT/scripts/foghorn-volume.mjs" $ARGUMENTS
 ```
 
 Argument meaning:

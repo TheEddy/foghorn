@@ -4,14 +4,20 @@
 
 <h1 align="center">📢 Foghorn</h1>
 
-A coding-agent plugin (macOS) that:
+A coding-agent plugin (macOS · Windows · Linux) that:
 
 - **Blares a random meme sound** when the agent finishes a turn — 40 clips from a soundboard.
-- **Keeps the display awake** while a session runs (`caffeinate -d`, tied to the agent process so it auto-stops on exit).
+- **Keeps the display awake** while a session runs, tied to the agent process so it auto-stops on exit.
 
 Business in front, FAAAHHH in back.
 
-> macOS only — uses `afplay` and `caffeinate`.
+> Cross-platform via small **Node** dispatchers (`node` already ships with every supported CLI).
+> Each picks the native tool per OS — no extra installs:
+> | | Play sound | Keep awake |
+> |---|---|---|
+> | **macOS** | `afplay` | `caffeinate` |
+> | **Windows** | PowerShell `MediaPlayer` | `SetThreadExecutionState` |
+> | **Linux** | `ffplay`/`mpg123`/`paplay` | `systemd-inhibit` |
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-theeddy-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/theeddy)
 
@@ -54,7 +60,7 @@ argument. Foghorn ships an adapter that blares a clip on `agent-turn-complete`.
    `[table]`**, so put this line at the very top of the file:
 
    ```toml
-   notify = ["/bin/bash", "/Users/YOU/foghorn/adapters/codex/foghorn-notify.sh"]
+   notify = ["node", "/Users/YOU/foghorn/adapters/codex/foghorn-notify.mjs"]
    ```
 
    (Use the absolute path to your clone — Codex does not inject a plugin-root variable.)
@@ -88,7 +94,7 @@ PRs welcome. Template (replace the placeholder event name with the real one from
       { "hooks": [ { "type": "command", "command": "nohup caffeinate -d -w $PPID >/dev/null 2>&1 &" } ] }
     ],
     "<AGENT_FINISH_EVENT>": [
-      { "hooks": [ { "type": "command", "command": "bash \"${PLUGIN_DIR}/scripts/play-random.sh\"" } ] }
+      { "hooks": [ { "type": "command", "command": "node \"${PLUGIN_DIR}/scripts/play-random.mjs\"" } ] }
     ]
   }
 }
@@ -110,15 +116,19 @@ foghorn/
 │   └── marketplace.json         # marketplace entry
 ├── hooks/hooks.json             # Claude Code: Stop + SessionStart hooks
 ├── adapters/codex/
-│   └── foghorn-notify.sh        # Codex notify program
+│   └── foghorn-notify.mjs       # Codex notify program
 ├── .opencode/plugin/
 │   └── foghorn.ts               # OpenCode plugin
-├── scripts/play-random.sh       # shared: picks a random clip, plays via afplay
+├── scripts/
+│   ├── play-random.mjs          # pick + play a random clip (OS-dispatch)
+│   ├── keep-awake.mjs           # hold a screen-awake assertion (OS-dispatch)
+│   ├── foghorn-volume.mjs       # get/set/test volume
+│   └── foghorn-caffeine.mjs     # enable/disable keep-awake
 └── assets/clips/*.mp3           # 40 meme sounds (shared by every adapter)
 ```
 
-`scripts/play-random.sh` is CLI-agnostic — every adapter just invokes it, so there is one
-source of truth for clip selection.
+The `scripts/*.mjs` dispatchers are CLI- and OS-agnostic — every adapter (Claude Code hooks,
+Codex notify, OpenCode plugin) just invokes them, so there is one source of truth per behaviour.
 
 ## Add / remove clips
 
@@ -126,8 +136,8 @@ Drop or delete `.mp3` files in `assets/clips/`. The player picks uniformly at ra
 
 ## Volume
 
-Playback volume is an `afplay` gain (`1.0` = normal, `0` = mute, `2.0` = louder), stored in
-`~/.config/foghorn/volume` and read on every CLI — set it once, applies everywhere.
+Playback volume is a gain (`1.0` = normal, `0` = mute, `2.0` = louder), stored in
+`~/.config/foghorn/volume` and read on every CLI/OS — set it once, applies everywhere.
 
 **Claude Code** — slash command:
 
@@ -140,13 +150,13 @@ Playback volume is an `afplay` gain (`1.0` = normal, `0` = mute, `2.0` = louder)
 **Any CLI** — run the script directly:
 
 ```sh
-bash scripts/foghorn-volume.sh 0.5
+node scripts/foghorn-volume.mjs 0.5
 ```
 
 ## Keep screen awake
 
-The display-awake feature (`caffeinate`) is **on by default**. Toggle it with the shared config
-at `~/.config/foghorn/caffeinate` (`on`/`off`) — applies to Claude Code and OpenCode.
+The display-awake feature is **on by default**. Toggle it with the shared config
+at `~/.config/foghorn/caffeinate` (`on`/`off`) — applies to Claude Code and OpenCode, every OS.
 
 **Claude Code** — slash command:
 
@@ -159,7 +169,7 @@ at `~/.config/foghorn/caffeinate` (`on`/`off`) — applies to Claude Code and Op
 **Any CLI** — run the script directly:
 
 ```sh
-bash scripts/foghorn-caffeine.sh off
+node scripts/foghorn-caffeine.mjs off
 ```
 
 Changes take effect at the next session start.
