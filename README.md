@@ -124,6 +124,25 @@ source of truth for clip selection.
 
 Drop or delete `.mp3` files in `assets/clips/`. The player picks uniformly at random from whatever is there.
 
+## Volume
+
+Playback volume is an `afplay` gain (`1.0` = normal, `0` = mute, `2.0` = louder), stored in
+`~/.config/foghorn/volume` and read on every CLI — set it once, applies everywhere.
+
+**Claude Code** — slash command:
+
+```
+/foghorn-volume         # show current volume
+/foghorn-volume 0.5     # set to half
+/foghorn-volume test    # play a clip at the current volume
+```
+
+**Any CLI** — run the script directly:
+
+```sh
+bash scripts/foghorn-volume.sh 0.5
+```
+
 ## Support
 
 If foghorn made you laugh (or kept your screen awake through a long run), buy me a coffee ☕
